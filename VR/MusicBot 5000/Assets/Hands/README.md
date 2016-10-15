@@ -1,3 +1,3 @@
 #Hands Asset
--Menu
--Mallets
+- Menu
+- Mallets
