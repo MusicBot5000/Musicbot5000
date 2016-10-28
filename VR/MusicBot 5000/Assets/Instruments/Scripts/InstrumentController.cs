@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class InstrumentController : MonoBehaviour {
-    public string n;
+    public int n;
+    public Communication comms;
 	// Use this for initialization
 	void Start () {
 	
@@ -13,9 +14,10 @@ public class InstrumentController : MonoBehaviour {
 	
 	}
 
-    void PlayNote(string note)
+    void PlayNote(int note)
     {
         n = note;
         Debug.Log("Note " + note + " played.");
+        comms.SendNum(note);
     }
 }
