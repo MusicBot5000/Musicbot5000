@@ -7,10 +7,11 @@ public class GameController : MonoBehaviour {
     public Transform InstrumentSpot;
     public GameObject[] Instruments;
     GameObject InstrumentInst;
+    public int InstrumentID;
 
 
 	void Start () {
-	
+        InstrumentID = -1;
 	}
 	
 	// Update is called once per frame
@@ -20,13 +21,14 @@ public class GameController : MonoBehaviour {
 
     public void ChangeInstrument(int Id)
     {
-        if (InstrumentInst != null)
+        if (InstrumentInst != null && Id!=InstrumentID)
         {
             Destroy(InstrumentInst);
         }
-        if (Id >= 0)
+        if (Id >= 0 && Id!=InstrumentID)
         {
             InstrumentInst = Instantiate(Instruments[Id], InstrumentSpot) as GameObject;
         }
+        InstrumentID = Id;
     }
 }
