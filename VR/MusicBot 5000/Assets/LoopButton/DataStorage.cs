@@ -55,7 +55,7 @@ public class DataStorage : MonoBehaviour
 		{
 			curr = DateTime.Now;
 			elapsed = (curr - refTime).TotalMilliseconds;
-			yield return new WaitForSeconds(.0001f);
+			yield return null;
 
 			// if a note is hit then store in a Note within loop
 			// no comms protocol set up yet
