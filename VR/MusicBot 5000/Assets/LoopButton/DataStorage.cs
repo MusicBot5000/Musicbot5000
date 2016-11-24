@@ -4,73 +4,45 @@ using UnityEngine.UI;
 using System;
 using System.Timers;
 
+
+
+
+
 public class DataStorage : MonoBehaviour
 {
 
 	public bool isLooping = false;
-
-	public int refTime; // Use Integer time here
-
-	public const long MAXLOOPTIME = 5 * 1000; // Changed this to const on Nov 23 2016 - Isaac TODO: Change back to 20 sec.
+	public Button myButton;
+	public DateTime refTime;
+	public long maxSeconds = 5;
+	public const long maxLoopTime = 5000;
 	public Loop loop;
-
-	public Timer loopTimer;
 
 	// Use this for initialization
 	void Start()
 	{
-		
-		
-		Toggle myToggle = GetComponent<Toggle>();
-		Label timeLabel = GetComponent<Label> ();
-		myToggle.onValueChanged.AddListener (StartLoop);
-		loopTimer = new Timer (); // created a timer - Isaac
-		loopTimer.Interval = MAXLOOPTIME;
+		Toggle myButton = GetComponent<Toggle>();
+		myButton.onValueChanged.AddListener (StartLoop);
 	}
-
 
 	// Update is called once per frame
 	void Update()
 	{
-		
+
 	}
 
-	private void timer_Tick(object sender, EventArgs e)
-	{
-		if (refTime > 0)
-		{
-			refTime = refTime - 1;
-			timeLabel.Text = refTime + "seconds";
-		}
-
-		else
-		{
-			
-			loopTimer.Stop();
-			timeLabel.Text = "Not Looping";
-
-			sum.Value = addend1 + addend2;
-			startButton.Enabled = true;
-		}
-
-
 	// starts or stops looping storage
-	public void StartLoop(bool something) 
+	public void StartLoop(bool something)
 	{
 		isLooping = !isLooping;
 		if (isLooping)
 		{
-			loopTimer.Enabled = true;
-			loopTimer.Tick += new System.EventHandler (ReadData);
-		}
-		else
-		{
-			loopTimer.Enabled = false;
+			StartCoroutine("ReadData");
 		}
 	}
 
 	// runs for 20 seconds or until looping is manually ended
-	private void ReadData(object sender, EventArgs e)
+	IEnumerator ReadData()
 	{
 		loop = new Loop();
 		refTime = DateTime.Now;
@@ -78,20 +50,18 @@ public class DataStorage : MonoBehaviour
 		double elapsed = (curr - refTime).TotalMilliseconds;
 		int inst;
 		int note;
-		Debug.Log ("Hello World"); 
-		/*
-		while (elapsed < MAXLOOPTIME)
+		Debug.Log("Start Loop");
+		while (elapsed < maxLoopTime && isLooping)
 		{
-			Debug.Log ("Looping");
 			curr = DateTime.Now;
 			elapsed = (curr - refTime).TotalMilliseconds;
+			yield return new WaitForSeconds(.0001f);
+
 			// if a note is hit then store in a Note within loop
 			// no comms protocol set up yet
-		} */
-
-
+		}
+		Debug.Log("End Loop");
 	}
-
 }
 
 // Note node class that stores information about played note in order in the Loop list
@@ -179,3 +149,12 @@ public class Loop
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
