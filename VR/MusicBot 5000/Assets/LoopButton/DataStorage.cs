@@ -109,6 +109,37 @@ public class Note
 	}
 }
 
+
+    // starts or stops playback of loop
+    public void PlayLoop()
+    {
+        playing = !playing;
+        if (playing)
+        {
+            StartCoroutine("WriteData");
+        }
+        else
+        {
+            StopCoroutine("WriteData");
+        }
+    }
+
+    // runs loop until stop command is set
+    IEnumerator WriteData()
+    {
+        if (loop == mull || loop.getHead == null)
+        {
+            // there is no loop to play
+        }
+        else
+        {
+            for (;;)
+            { 
+                // traverse loop and return stuff and add appropriate delays
+            }
+        }
+    }
+
 // loop circular linked list class that stores notes as nodes in order
 public class Loop
 {
