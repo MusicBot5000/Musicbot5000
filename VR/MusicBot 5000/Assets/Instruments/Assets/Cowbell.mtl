@@ -1,0 +1,20 @@
+#
+## Alias OBJ Material File
+# Exported from SketchUp, (c) 2000-2012 Trimble Navigation Limited
+
+newmtl M_0136_Charcoal
+Ka 0.000000 0.000000 0.000000
+Kd 0.137255 0.137255 0.137255
+Ks 0.330000 0.330000 0.330000
+
+newmtl Metal_Corrogated_Shiny
+Ka 0.000000 0.000000 0.000000
+Kd 0.756863 0.756863 0.756863
+Ks 0.330000 0.330000 0.330000
+map_Kd Cowbell/Metal_Corrogated_Shiny.jpg
+
+newmtl M_0137_Black
+Ka 0.000000 0.000000 0.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.330000 0.330000 0.330000
+

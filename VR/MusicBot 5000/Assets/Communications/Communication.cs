@@ -9,14 +9,14 @@ public class Communication : MonoBehaviour {
    
     // Use this for initialization
     void Start () {
-        serial = new SerialPort("COM4", 9600);
+        //serial = new SerialPort("COM4", 9600);
     }
 
     public void SendNum(int note)
     {
-        serial.Open();
-        serial.Write(note+"");
-        serial.Close();
+        //serial.Open();
+        //serial.Write(note+"");
+        //serial.Close();
     }
 
 }

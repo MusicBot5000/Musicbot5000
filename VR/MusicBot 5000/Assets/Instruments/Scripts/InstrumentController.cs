@@ -7,7 +7,12 @@ public class InstrumentController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+<<<<<<< HEAD
+        comms = GameObject.FindGameObjectWithTag("GameController").GetComponent<Communication>();
+    }
+=======
 	}
+>>>>>>> refs/remotes/origin/master
 	
 	// Update is called once per frame
 	void Update () {
