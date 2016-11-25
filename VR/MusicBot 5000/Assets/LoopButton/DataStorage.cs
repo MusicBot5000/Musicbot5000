@@ -12,7 +12,8 @@ public class DataStorage : MonoBehaviour
 {
 
 	public bool isLooping = false;
-	public Button myButton;
+	public Toggle myTrigger;
+	public Text status;
 	public DateTime refTime;
 	public long maxSeconds = 5;
 	public const long maxLoopTime = 5000;
@@ -21,8 +22,10 @@ public class DataStorage : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		Toggle myButton = GetComponent<Toggle>();
-		myButton.onValueChanged.AddListener (StartLoop);
+		
+		myTrigger.onValueChanged.AddListener (StartLoop);
+
+
 	}
 
 	// Update is called once per frame
@@ -51,6 +54,7 @@ public class DataStorage : MonoBehaviour
 		int inst;
 		int note;
 		Debug.Log("Start Loop");
+		status.text = "Looping";
 		while (elapsed < maxLoopTime && isLooping)
 		{
 			curr = DateTime.Now;
@@ -61,6 +65,8 @@ public class DataStorage : MonoBehaviour
 			// no comms protocol set up yet
 		}
 		Debug.Log("End Loop");
+		status.text = "Not Looping";
+		myTrigger.isOn = false;
 	}
 }
 
