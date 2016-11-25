@@ -109,7 +109,7 @@ public class Note
 	}
 }
 
-
+/*
     // starts or stops playback of loop
     public void PlayLoop()
     {
@@ -139,7 +139,7 @@ public class Note
             }
         }
     }
-
+    */
 // loop circular linked list class that stores notes as nodes in order
 public class Loop
 {
