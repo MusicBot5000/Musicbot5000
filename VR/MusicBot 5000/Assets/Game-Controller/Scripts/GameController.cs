@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class GameController : MonoBehaviour {
 
     // Use this for initialization
@@ -8,10 +9,11 @@ public class GameController : MonoBehaviour {
     public GameObject[] Instruments;
     GameObject InstrumentInst;
     public int InstrumentID;
-
+    public bool MenuOpen;
 
 	void Start () {
         InstrumentID = -1;
+        MenuOpen = false;
 	}
 	
 	// Update is called once per frame
@@ -31,4 +33,5 @@ public class GameController : MonoBehaviour {
         }
         InstrumentID = Id;
     }
+
 }
