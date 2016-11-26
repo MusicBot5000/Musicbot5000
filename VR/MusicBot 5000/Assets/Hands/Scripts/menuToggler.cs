@@ -54,6 +54,7 @@ public class menuToggler : MonoBehaviour {
 
     public void CloseMenu()
     {
+
         StartCoroutine(ActivateOption(false));
     }
 
