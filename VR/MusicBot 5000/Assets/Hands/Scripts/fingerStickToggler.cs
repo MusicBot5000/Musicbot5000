@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class fingerStickToggler : MonoBehaviour
 {
     
     public GameObject Hand;
     public GameObject Finger;
-    public GameObject Stick;
+    public GameObject DrumStick, Mallet;
     private GameObject Tip, Knuckle;
     private Vector3 FingerVector, KnuckleVector;
+    private GameObject Stick;
+    GameController GameCon;
 
     // Use this for initialization
     void Awake()
@@ -17,12 +20,16 @@ public class fingerStickToggler : MonoBehaviour
 
     void Start()
     {
+        Stick = DrumStick;
         Tip = Finger.transform.FindChild("bone3").gameObject;
         Knuckle = Finger.transform.FindChild("bone1").gameObject;
 
         FingerVector = Tip.transform.position - Knuckle.transform.position;
         Stick.transform.rotation = Quaternion.LookRotation(FingerVector.normalized);
         Stick.transform.position = Knuckle.transform.position;
+
+
+        GameCon = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
     }
 
     // Update is called once per frame
@@ -33,6 +40,11 @@ public class fingerStickToggler : MonoBehaviour
         KnuckleVector = Knuckle.transform.position;
         KnuckleVector.z -= 0.11f;
         Stick.transform.position = KnuckleVector;
+
+        if (GameCon.MenuOpen)
+        {
+            HideStick();
+        }
     }
 
     public void ShowStick()
@@ -47,8 +59,23 @@ public class fingerStickToggler : MonoBehaviour
 
     IEnumerator ActivateStick(bool active)
     {
-        Hand.SetActive(!active);
-        Stick.SetActive(active);
+        if (!GameCon.MenuOpen || !active)
+        {
+            Hand.SetActive(!active);
+
+            Debug.Log(GameCon.InstrumentID);
+            switch (GameCon.InstrumentID)
+            {
+                case 0:
+                    Stick = Mallet;
+                    break;
+                case 1:
+                    Stick = DrumStick;
+                    break;
+            }
+
+            Stick.SetActive(active);
+        }
         yield return null;
     }
 }
