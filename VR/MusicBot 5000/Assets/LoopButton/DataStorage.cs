@@ -62,28 +62,27 @@ public class DataStorage : MonoBehaviour
 		DateTime curr = DateTime.Now;
 		DateTime prev = refTime;
 		double elapsed = (curr - refTime).TotalMilliseconds;
-		int inst;
-		int note;
+		String id;
 
 		double delay;
 		Debug.Log("Start Loop");
 		status.text = "Looping";
+
 		while (elapsed < maxLoopTime && isLooping)
 		{
 			curr = DateTime.Now;
 			elapsed = (curr - refTime).TotalMilliseconds;
 
 			if (notePlayed) {
-
+				id = "";
 				delay = (curr - prev).TotalMilliseconds;
-				inst = 0; // TODO: Get Global instrument variable from the Prefab upon collision
-				note = 0; // TODO: Update this to be w.r.t the certain key that was hit
 
 				if (loop == null) {
-					loop = new Loop (inst, note, delay);
+					loop = new Loop(id, delay);
+					Debug.Log (loop.getHead ().getId());
 				} 
 				else {
-					loop.addNote (inst, note, delay);
+					loop.addNote (id, delay);
 				}
 				notePlayed = false;
 				prev = curr;
@@ -112,8 +111,7 @@ public class DataStorage : MonoBehaviour
 	// runs loop until stop command is set
 	IEnumerator WriteData()
 	{
-		int instrument;
-		int note;
+		String id;
 		double delay;
 		if (loop == null || loop.getHead() == null)
 		{
@@ -132,14 +130,12 @@ public class DataStorage : MonoBehaviour
 			for (;;)
 			{ 
 				// traverse loop and return stuff and add appropriate delays
-				instrument = temp.getInst();
-				note = temp.getNote();
+				id = temp.getId();
 				delay = temp.getDelay();
 				EditorApplication.Beep ();
 				yield return new WaitForSeconds((float) delay/1000.0f);
 				//TODO: Send this to the arduino 
 				EditorApplication.Beep();
-
 				temp = temp.getNext();
 
 			}
@@ -151,16 +147,16 @@ public class DataStorage : MonoBehaviour
 // Note node class that stores information about played note in order in the Loop list
 public class Note
 {
-	private int instrument; // 0 for xylophone 1 for drum
+	private char instrument; // 0 for xylophone 1 for drum
 	private int note; // 0-3 for drum, 0-10 for xylophone
 	private double timing; // elapsed time in milliseconds
 	private Note next; // next note in sequence
 
 	// constructor
-	public Note(int instNum, int noteNum, double length)
+	public Note(String id, double length)
 	{
-		this.instrument = instNum;
-		this.note = noteNum;
+		this.instrument = id[0];
+		int.TryParse (id.Substring (1, 2), out this.note);
 		this.timing = length;
 		this.next = null;
 	}
@@ -188,6 +184,19 @@ public class Note
 	public Note getNext(){
 		return next;
 	}
+	// returns id
+	public string getId(){
+		string str = "";
+		str += instrument;
+
+		if (note >= 10) {
+			str += note.ToString ();
+		} else {
+			str += "0";
+			str += note.ToString ();
+		}
+		return str;
+	}
 }
 
 
@@ -200,9 +209,9 @@ public class Loop
 	private Note curr; // last note in loop (most recently added)
 
 	// constructor for loop with 1 note
-	public Loop(int x, int y, double z)
+	public Loop(String x, double y)
 	{
-		this.head = new global::Note(x, y, z);
+		this.head = new global::Note(x, y);
 		this.head.setNext(head);
 		this.curr = head;
 	}
@@ -211,11 +220,17 @@ public class Loop
 	{
 		return head;
 	}
+	public Note getCurr()
+	{
+		return curr;
+	}
+
+
 
 	// adds a new note to the loop
-	public void addNote(int x, int y, double z)
+	public void addNote(String x, double y)
 	{
-		Note temp = new Note(x, y, z);
+		Note temp = new Note(x,y);
 		// sets head if loop empty
 		if (head == null)
 		{
@@ -232,6 +247,3 @@ public class Loop
 		}
 	}
 }
-
-
-
