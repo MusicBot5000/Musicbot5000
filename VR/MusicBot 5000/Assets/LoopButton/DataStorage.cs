@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System;
 using System.Timers;
+using UnityEditor;
 
 
 
@@ -12,7 +13,13 @@ public class DataStorage : MonoBehaviour
 {
 
 	public bool isLooping = false;
+	public bool playing = false;
+
+	public bool notePlayed = false;
+
+
 	public Toggle myTrigger;
+	public Toggle writeTrigger;
 	public Text status;
 	public DateTime refTime;
 	public long maxSeconds = 5;
@@ -22,9 +29,11 @@ public class DataStorage : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		
+		myTrigger.isOn = false;
+		writeTrigger.isOn = false;
 		myTrigger.onValueChanged.AddListener (StartLoop);
-
+		writeTrigger.onValueChanged.AddListener (PlayLoop);
+		loop = null;
 
 	}
 
@@ -40,6 +49,8 @@ public class DataStorage : MonoBehaviour
 		isLooping = !isLooping;
 		if (isLooping)
 		{
+			//loop = null; // TODO: Change this as necessary
+			loop = null;
 			StartCoroutine("ReadData");
 		}
 	}
@@ -47,27 +58,94 @@ public class DataStorage : MonoBehaviour
 	// runs for 20 seconds or until looping is manually ended
 	IEnumerator ReadData()
 	{
-		loop = new Loop();
 		refTime = DateTime.Now;
 		DateTime curr = DateTime.Now;
+		DateTime prev = refTime;
 		double elapsed = (curr - refTime).TotalMilliseconds;
 		int inst;
 		int note;
+
+		double delay;
 		Debug.Log("Start Loop");
 		status.text = "Looping";
 		while (elapsed < maxLoopTime && isLooping)
 		{
 			curr = DateTime.Now;
 			elapsed = (curr - refTime).TotalMilliseconds;
+
+			if (notePlayed) {
+
+				delay = (curr - prev).TotalMilliseconds;
+				inst = 0; // TODO: Get Global instrument variable from the Prefab upon collision
+				note = 0; // TODO: Update this to be w.r.t the certain key that was hit
+
+				if (loop == null) {
+					loop = new Loop (inst, note, delay);
+				} 
+				else {
+					loop.addNote (inst, note, delay);
+				}
+				notePlayed = false;
+				prev = curr;
+			}
+
 			yield return null;
 
-			// if a note is hit then store in a Note within loop
-			// no comms protocol set up yet
 		}
 		Debug.Log("End Loop");
 		status.text = "Not Looping";
 		myTrigger.isOn = false;
 	}
+
+	// starts or stops playback of loop
+	public void PlayLoop(bool something)
+	{
+		playing = !playing;
+		if (playing) {
+			StartCoroutine ("WriteData");
+		} else {
+			StopCoroutine ("WriteData");
+		}
+
+	}
+
+	// runs loop until stop command is set
+	IEnumerator WriteData()
+	{
+		int instrument;
+		int note;
+		double delay;
+		if (loop == null || loop.getHead() == null)
+		{
+			// there is no loop to play
+			status.text = "No Loops Available!";
+
+			yield return new WaitForSeconds(1);
+			writeTrigger.isOn = false;
+
+
+		}
+		else
+		{
+			status.text = "Playback Loop";
+			Note temp = loop.getHead ();
+			for (;;)
+			{ 
+				// traverse loop and return stuff and add appropriate delays
+				instrument = temp.getInst();
+				note = temp.getNote();
+				delay = temp.getDelay();
+				EditorApplication.Beep ();
+				yield return new WaitForSeconds((float) delay/1000.0f);
+				//TODO: Send this to the arduino 
+				EditorApplication.Beep();
+
+				temp = temp.getNext();
+
+			}
+		}
+	}
+
 }
 
 // Note node class that stores information about played note in order in the Loop list
@@ -75,16 +153,16 @@ public class Note
 {
 	private int instrument; // 0 for xylophone 1 for drum
 	private int note; // 0-3 for drum, 0-10 for xylophone
-	private long timing; // elapsed time in milliseconds
+	private double timing; // elapsed time in milliseconds
 	private Note next; // next note in sequence
 
 	// constructor
-	public Note(int instNum, int noteNum, long length)
+	public Note(int instNum, int noteNum, double length)
 	{
-		instrument = instNum;
-		note = noteNum;
-		length = timing;
-		next = null;
+		this.instrument = instNum;
+		this.note = noteNum;
+		this.timing = length;
+		this.next = null;
 	}
 
 	// returns instrument number
@@ -98,7 +176,7 @@ public class Note
 		return note;
 	}
 	// returns delay before note in milliseconds
-	public long getDelay()
+	public double getDelay()
 	{
 		return timing;
 	}
@@ -107,58 +185,26 @@ public class Note
 	{
 		next = nextNote;
 	}
+	public Note getNext(){
+		return next;
+	}
 }
 
-/*
-    // starts or stops playback of loop
-    public void PlayLoop()
-    {
-        playing = !playing;
-        if (playing)
-        {
-            StartCoroutine("WriteData");
-        }
-        else
-        {
-            StopCoroutine("WriteData");
-        }
-    }
 
-    // runs loop until stop command is set
-    IEnumerator WriteData()
-    {
-        if (loop == mull || loop.getHead == null)
-        {
-            // there is no loop to play
-        }
-        else
-        {
-            for (;;)
-            { 
-                // traverse loop and return stuff and add appropriate delays
-            }
-        }
-    }
-    */
+
+
 // loop circular linked list class that stores notes as nodes in order
 public class Loop
 {
 	private Note head; // first note in loop
 	private Note curr; // last note in loop (most recently added)
 
-	// constructor for empty loop
-	public Loop()
-	{
-		head = null;
-		curr = null;
-	}
-
 	// constructor for loop with 1 note
-	public Loop(int x, int y, long z)
+	public Loop(int x, int y, double z)
 	{
-		head = new global::Note(x, y, x);
-		head.setNext(head);
-		curr = head;
+		this.head = new global::Note(x, y, z);
+		this.head.setNext(head);
+		this.curr = head;
 	}
 
 	public Note getHead()
@@ -167,7 +213,7 @@ public class Loop
 	}
 
 	// adds a new note to the loop
-	public void addNote(int x, int y, long z)
+	public void addNote(int x, int y, double z)
 	{
 		Note temp = new Note(x, y, z);
 		// sets head if loop empty
@@ -186,12 +232,6 @@ public class Loop
 		}
 	}
 }
-
-
-
-
-
-
 
 
 
