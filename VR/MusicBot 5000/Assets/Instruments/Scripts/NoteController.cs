@@ -4,9 +4,9 @@ using System.Collections;
 public class NoteController : MonoBehaviour {
 
     public int note;
-    InstrumentController cont;
+    public InstrumentController cont;
 	// Use this for initialization
-	void Start () {
+	protected void Start () {
         cont = GameObject.FindGameObjectWithTag("Instrument").GetComponent<InstrumentController>() ;
 	}
 	
@@ -15,7 +15,7 @@ public class NoteController : MonoBehaviour {
 	
 	}
 
-    void OnTriggerEnter(Collider col)
+    protected void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player")
         {
