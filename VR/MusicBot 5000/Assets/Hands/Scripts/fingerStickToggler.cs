@@ -41,7 +41,7 @@ public class fingerStickToggler : MonoBehaviour
         KnuckleVector.z -= 0.11f;
         Stick.transform.position = KnuckleVector;
 
-        if (GameCon.MenuOpen)
+        if (GameCon.LMenuOpen || GameCon.RMenuOpen)
         {
             HideStick();
         }
@@ -59,7 +59,7 @@ public class fingerStickToggler : MonoBehaviour
 
     IEnumerator ActivateStick(bool active)
     {
-        if (!GameCon.MenuOpen || !active)
+        if ((!GameCon.LMenuOpen && !GameCon.RMenuOpen) || !active)
         {
             Hand.SetActive(!active);
 

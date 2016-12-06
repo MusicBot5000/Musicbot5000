@@ -40,7 +40,7 @@ public class menuToggler : MonoBehaviour {
 
     IEnumerator ActivateOption(bool active)
     {
-        GameCon.MenuOpen = active;
+        GameCon.LMenuOpen = active;
         DrumOption.SetActive(active);
         XyloOption.SetActive(active);
         ExitOption.SetActive(active);

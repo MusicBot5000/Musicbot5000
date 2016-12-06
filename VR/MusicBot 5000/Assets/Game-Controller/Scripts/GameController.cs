@@ -9,12 +9,14 @@ public class GameController : MonoBehaviour {
     public GameObject[] Instruments;
     GameObject InstrumentInst;
     public int InstrumentID;
-    public bool MenuOpen;
+    public bool LMenuOpen;
+    public bool RMenuOpen;
 
 	void Start () {
         InstrumentID = -1;
-        MenuOpen = false;
-	}
+        LMenuOpen = false;
+        RMenuOpen = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
