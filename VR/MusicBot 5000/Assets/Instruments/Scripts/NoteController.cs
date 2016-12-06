@@ -3,7 +3,7 @@ using System.Collections;
 
 public class NoteController : MonoBehaviour {
 
-    public int note;
+    public string note;
     public InstrumentController cont;
 	// Use this for initialization
 	protected void Start () {
