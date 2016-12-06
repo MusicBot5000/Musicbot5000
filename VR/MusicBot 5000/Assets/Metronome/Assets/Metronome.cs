@@ -4,80 +4,64 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEditor;
 
-public delegate void MetronomeEvent(Metronome metronome);
 
-public class Metronome : MonoBehaviour {
-	public int Base;
-	public int Step;
-	public int BPM;
-	public int CurrentStep = 1;
-	public int CurrentMeasure;
 
-	private float interval;
-	private float nextTime;
 
-	public event MetronomeEvent OnTick;
-	public event MetronomeEvent OnNewMeasure;
-
-	public bool active = false;
+public class Metronome : MonoBehaviour
+{
 	public Button myButton;
-	public InputField myField;
-	// Use this for initialization
-	void Start () {
-		
-		myField = GetComponentInParent<InputField>();
-		Button myButton = GetComponent<Button>();
-		myButton.onClick.AddListener(StartMetronome);
-		//StartMetronome(); 
+	public Slider mySlider;
+	public AudioSource src; 
+
+
+
+	public double bpm = 0.0f;
+
+	double nextTick = 0.0F; // The next tick in dspTime
+	double sampleRate = 0.0F; 
+	bool ticked = false;
+	bool active = false;
+
+	void Start() {
+		double startTick = AudioSettings.dspTime;
+		sampleRate = AudioSettings.outputSampleRate;
+		bpm = mySlider.value;
+		nextTick = startTick + (60.0 / bpm);
+		Debug.Log (nextTick);
+		myButton.onClick.AddListener (toggle);
+
 	}
 
-	void update()
-	{
+	void LateUpdate() {
+		if ( !ticked && nextTick >= AudioSettings.dspTime && active ) {
+			ticked = true;
+			BroadcastMessage( "OnTick" );
+		}
+	}
+
+	// Just an example OnTick here
+	void toggle() {
 		
-		string text = myField.text;
-		int.TryParse(text, out BPM); 
-		Debug.Log(BPM);
-
-	} 
-
-
-
-	public void StartMetronome()
-	{
 		active = !active;
-		if (active) {
-			StopCoroutine ("DoTick");
-			CurrentStep = 1;
-			var multiplier = Base / 4f;
-			var tmpInterval = 60f / BPM;
-			interval = tmpInterval / multiplier;
-			nextTime = Time.time;
-			StartCoroutine ("DoTick");
-		} else {
-			StopCoroutine ("DoTick");
-		}
+	}
+	void OnTick() {
+		
+		src.Play ();
+		//EditorApplication.Beep();
+
+	
 
 	}
 
-	IEnumerator DoTick()
-	{
-		AudioSource mySource = GetComponent<AudioSource>();
-		for (; ; )
-		{
-			mySource.Play();
-
-			if (CurrentStep == 1 && OnNewMeasure != null)
-				OnNewMeasure(this);
-			if (OnTick != null)
-				OnTick(this);
-			nextTime += interval;
-			yield return new WaitForSeconds(nextTime - Time.time);
-			CurrentStep++;
-			if (CurrentStep > Step)
-			{
-				CurrentStep = 1;
-				CurrentMeasure++;
-			}
+	void FixedUpdate() {
+		bpm = mySlider.value;
+		double timePerTick = 60.0f / bpm;
+		double dspTime = AudioSettings.dspTime;
+		//Debug.Log (nextTick);
+		while ( dspTime >= nextTick && active) {
+			ticked = false;
+			nextTick += timePerTick;
 		}
+
 	}
 }
