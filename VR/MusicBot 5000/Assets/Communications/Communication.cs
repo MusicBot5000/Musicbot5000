@@ -8,14 +8,20 @@ public class Communication : MonoBehaviour {
 
     SerialPort serial;
     public string IP_Address;
+    public LoopStorage musicLoop;
     // Use this for initialization
     void Start () {
         //serial = new SerialPort("COM4", 9600);
+        musicLoop = GameObject.FindGameObjectWithTag("GameController").GetComponent<LoopStorage>();
     }
 
     public void SendNum(string instrument, string note)
     {
         SendHTTPRequest(instrument + note);
+        if (musicLoop.isLooping)
+        {
+            musicLoop.AddNote(instrument + note);
+        }
     }
 
 

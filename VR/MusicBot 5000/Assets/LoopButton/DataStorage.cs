@@ -34,7 +34,6 @@ public class DataStorage : MonoBehaviour
 		myTrigger.onValueChanged.AddListener (StartLoop);
 		writeTrigger.onValueChanged.AddListener (PlayLoop);
 		loop = null;
-
 	}
 
 	// Update is called once per frame
@@ -74,7 +73,7 @@ public class DataStorage : MonoBehaviour
 			elapsed = (curr - refTime).TotalMilliseconds;
 
 			if (notePlayed) {
-				id = "";
+				id = "";//TODO get input from user
 				delay = (curr - prev).TotalMilliseconds;
 
 				if (loop == null) {
