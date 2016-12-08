@@ -28,13 +28,14 @@ public class fingerStickToggler : MonoBehaviour
         Stick.transform.rotation = Quaternion.LookRotation(FingerVector.normalized);
         Stick.transform.position = Knuckle.transform.position;
 
-
         GameCon = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Gets the finger location and the finger vector from knuckle to tip.
+        // Places the stick on the position and aligns it with the vector.
         FingerVector = Tip.transform.position - Knuckle.transform.position;
         Stick.transform.rotation = Quaternion.LookRotation(FingerVector.normalized);
         KnuckleVector = Knuckle.transform.position;
@@ -63,7 +64,6 @@ public class fingerStickToggler : MonoBehaviour
         {
             Hand.SetActive(!active);
 
-            Debug.Log(GameCon.InstrumentID);
             switch (GameCon.InstrumentID)
             {
                 case 0:
