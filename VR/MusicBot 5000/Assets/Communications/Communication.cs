@@ -2,21 +2,30 @@
 using System.Collections;
 using System.IO.Ports;
 using UnityEngine.UI;
+using System.Net;
 
 public class Communication : MonoBehaviour {
 
     SerialPort serial;
-   
+    public string IP_Address;
     // Use this for initialization
     void Start () {
         //serial = new SerialPort("COM4", 9600);
     }
 
-    public void SendNum(int note)
+    public void SendNum(string instrument, string note)
     {
-        //serial.Open();
-        //serial.Write(note+"");
-        //serial.Close();
+        SendHTTPRequest(instrument + note);
     }
 
+
+    public void SendHTTPRequest(string note)
+    {
+        WebRequest request = WebRequest.Create(IP_Address + note + "/VR Module");
+        request.Credentials = CredentialCache.DefaultCredentials;
+        request.Method = "GET";
+        request.ContentType = "application/x-www-form-urlencoded";
+        WebResponse response = request.GetResponse();
+        Debug.Log("received: " + response.ToString());
+    }
 }
