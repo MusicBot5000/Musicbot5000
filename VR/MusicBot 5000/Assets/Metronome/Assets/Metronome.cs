@@ -32,7 +32,7 @@ public class Metronome : MonoBehaviour
 
         double startTick = AudioSettings.dspTime;
         sampleRate = AudioSettings.outputSampleRate;
-        //bpm = mySlider.value;
+        bpm = GameCon.MetronomeBPM;
         nextTick = startTick + (60.0 / bpm);
         Debug.Log(nextTick);
         //myButton.onClick.AddListener (toggle);
@@ -63,7 +63,7 @@ public class Metronome : MonoBehaviour
 
     void FixedUpdate()
     {
-        //bpm = mySlider.value;
+        bpm = GameCon.MetronomeBPM;
         double timePerTick = 60.0f / bpm;
         dspTime = AudioSettings.dspTime;
 

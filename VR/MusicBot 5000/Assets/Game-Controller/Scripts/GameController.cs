@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour {
     // Metronome Control Variables
     Metronome Metro;
     public bool MetronomeActive;
+    public int MetronomeBPM;
 
     // Looping Control Varaibles
     public bool RecLoopActive;
@@ -28,6 +29,7 @@ public class GameController : MonoBehaviour {
 	void Start () {
         Metro = GameObject.Find("Metronome").GetComponentInChildren<Metronome>();
 
+        MetronomeBPM = 0;
         InstrumentID = -1;
         LMenuOpen = false;
         RMenuOpen = false;
