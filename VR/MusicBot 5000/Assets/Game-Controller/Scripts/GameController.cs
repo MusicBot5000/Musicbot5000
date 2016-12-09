@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour {
     // Looping Control Varaibles
     public bool RecLoopActive;
     public bool PlayLoopActive;
+    public LoopStorage looper;
     
 
 	void Start () {
@@ -34,7 +35,8 @@ public class GameController : MonoBehaviour {
         MetronomeActive = false;
         RecLoopActive = false;
         PlayLoopActive = false;
-}
+        looper = GameObject.FindGameObjectWithTag("GameController").GetComponent<LoopStorage>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -68,6 +70,7 @@ public class GameController : MonoBehaviour {
     {
 
         RecLoopActive = !RecLoopActive; // Use this variable and put this line in the record toggle function in the script
+        looper.StartLoop();//The looper will start recording.
         Debug.Log("ToggleRecLoop "+RecLoopActive); //Line to be Deleted
     }
 
@@ -76,6 +79,7 @@ public class GameController : MonoBehaviour {
     public void TogglePlayLoop()
     {
         PlayLoopActive = !PlayLoopActive; // Use this variable and put this line in the record toggle function in the script
+        looper.PlayLoop();
         Debug.Log("TogglePlayLoop "+PlayLoopActive); //Line to be Deleted
         
     }

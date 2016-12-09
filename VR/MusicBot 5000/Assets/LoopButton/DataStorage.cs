@@ -148,6 +148,7 @@ public class Note
 {
 	private char instrument; // 0 for xylophone 1 for drum
 	private int note; // 0-3 for drum, 0-10 for xylophone
+    private string noteCode;
 	private double timing; // elapsed time in milliseconds
 	private Note next; // next note in sequence
 
@@ -158,6 +159,7 @@ public class Note
 		int.TryParse (id.Substring (1, 2), out this.note);
 		this.timing = length;
 		this.next = null;
+        noteCode = id;
 	}
 
 	// returns instrument number
@@ -170,6 +172,11 @@ public class Note
 	{
 		return note;
 	}
+
+    public string GetNoteCode()
+    {
+        return noteCode;
+    }
 	// returns delay before note in milliseconds
 	public double getDelay()
 	{

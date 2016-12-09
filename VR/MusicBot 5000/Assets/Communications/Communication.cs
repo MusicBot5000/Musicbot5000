@@ -8,6 +8,7 @@ public class Communication : MonoBehaviour {
 
     SerialPort serial;
     public string IP_Address;
+    public int port;
     public LoopStorage musicLoop;
     // Use this for initialization
     void Start () {
@@ -20,6 +21,7 @@ public class Communication : MonoBehaviour {
         SendHTTPRequest(instrument + note);
         if (musicLoop.isLooping)
         {
+            //Debug.Log("IN COMMS" + instrument + note);
             musicLoop.AddNote(instrument + note);
         }
     }
@@ -27,7 +29,7 @@ public class Communication : MonoBehaviour {
 
     public void SendHTTPRequest(string note)
     {
-        WebRequest request = WebRequest.Create(IP_Address + note + "/VR Module");
+        WebRequest request = WebRequest.Create("http://" + IP_Address + ":" + port +  "/note/" + note + "/VR Module");
         request.Credentials = CredentialCache.DefaultCredentials;
         request.Method = "GET";
         request.ContentType = "application/x-www-form-urlencoded";

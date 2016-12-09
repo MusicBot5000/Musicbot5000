@@ -28,7 +28,7 @@ public class LoopStorage : MonoBehaviour
 
 
     // starts or stops looping storage
-    public void StartLoop(bool something)
+    public void StartLoop()
     {
         isLooping = !isLooping;
         if (isLooping)
@@ -41,14 +41,22 @@ public class LoopStorage : MonoBehaviour
 
     public void AddNote(string note)
     {
-        float noteTime = Time.unscaledTime;
-        if(loop == null)
+        if (isLooping)
         {
-            loop = new Loop(note, noteTime);
-        }
-        else
-        {
-            loop.addNote(note, noteTime);
+            //Debug.Log("added " + note + " to the loop");
+            if (loop == null)
+            {
+                float noteTime = 0;//first note in the loop should be played immediately.
+                loop = new Loop(note, noteTime);
+            }
+            else
+            {
+
+                float noteTime = Time.unscaledTime - refTime;
+                loop.addNote(note, noteTime);
+            }
+
+            refTime = Time.unscaledTime;
         }
     }
 
@@ -95,7 +103,7 @@ public class LoopStorage : MonoBehaviour
     //}
 
     // starts or stops playback of loop
-    public void PlayLoop(bool something)
+    public void PlayLoop()
     {
         playing = !playing;
         if (playing)
@@ -112,7 +120,7 @@ public class LoopStorage : MonoBehaviour
     // runs loop until stop command is set
     IEnumerator PlayData()
     {
-        string id;
+        string noteCode;
         double delay;
         if (loop == null || loop.getHead() == null)
         {
@@ -128,13 +136,14 @@ public class LoopStorage : MonoBehaviour
             for (;;)
             {
                 // traverse loop and return stuff and add appropriate delays
-                id = temp.getId();
+                noteCode = temp.GetNoteCode();
                 delay = temp.getDelay();
                 //EditorApplication.Beep();
-                yield return new WaitForSeconds((float)delay / 1000.0f);
+                yield return new WaitForSeconds((float)delay);
                 //TODO: Send this to the arduino 
                 //EditorApplication.Beep();
-                comms.SendHTTPRequest(id);
+                comms.SendHTTPRequest(noteCode);
+                //Debug.Log("Played " + noteCode + " from the loop");
                 temp = temp.getNext();
 
             }
