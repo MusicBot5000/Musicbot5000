@@ -17,6 +17,7 @@ public class NoteController : MonoBehaviour {
 
     protected void OnTriggerEnter(Collider col)
     {
+        cont = GameObject.FindGameObjectWithTag("Instrument").GetComponent<InstrumentController>();
         if (col.gameObject.tag == "Player")
         {
             cont.SendMessage("PlayNote", note);
