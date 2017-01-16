@@ -3,6 +3,8 @@ using System.Collections;
 
 public class NoteController : MonoBehaviour {
 
+    const double BOTTOM_COLLIDER_THRESH = -0.008;
+
     public string note;
     public InstrumentController cont;
 	// Use this for initialization
@@ -20,7 +22,12 @@ public class NoteController : MonoBehaviour {
         cont = GameObject.FindGameObjectWithTag("Instrument").GetComponent<InstrumentController>();
         if (col.gameObject.tag == "Player")
         {
-            cont.SendMessage("PlayNote", note);
+            Vector3 ColliderPosition = transform.InverseTransformPoint(col.transform.position);
+            ColliderPosition.y -= transform.GetComponent<BoxCollider>().center.y;
+            if (ColliderPosition.y > BOTTOM_COLLIDER_THRESH)
+            {
+                cont.SendMessage("PlayNote", note);
+            }
         }
     }
 }
