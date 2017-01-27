@@ -4,6 +4,7 @@ using System.Collections;
 public class DrumNoteController : NoteController {
     
     public float delay;
+    public string endRoll;
     private float startTime;
 
 	// Use this for initialization
@@ -25,6 +26,14 @@ public class DrumNoteController : NoteController {
             {
                 cont.SendMessage("PlayNote", note);
             }
+        }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+        if(col.gameObject.tag == "Player")
+        {
+            cont.SendMessage("PlayNote", endRoll);
         }
     }
 }

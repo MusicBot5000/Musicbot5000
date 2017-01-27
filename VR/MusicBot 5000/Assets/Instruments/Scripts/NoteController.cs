@@ -23,8 +23,14 @@ public class NoteController : MonoBehaviour {
         if (col.gameObject.tag == "Player")
         {
             Vector3 ColliderPosition = transform.InverseTransformPoint(col.transform.position);
-            ColliderPosition.y -= transform.GetComponent<BoxCollider>().center.y;
-            if (ColliderPosition.y > BOTTOM_COLLIDER_THRESH)
+            if (cont.Instrument == "x")
+            {
+                ColliderPosition.y -= transform.GetComponent<BoxCollider>().center.y;
+                if (ColliderPosition.y > BOTTOM_COLLIDER_THRESH)
+                {
+                    cont.SendMessage("PlayNote", note);
+                }
+            }else
             {
                 cont.SendMessage("PlayNote", note);
             }
