@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="./musicbot.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <meta charset="utf-8"/>
+    <title>MUSIC BOT 5000</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="myclient.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <H1>Welcome to the MusicBot 5000</H1>
+	<div id="instrumentSelectionDiv" class="hide">
+	  <button onclick="changeInstrument('xylophone')" type="button" class="btn-md btn btn-primary">
+	    xylophone
+	  </button>
+	  <button onclick="changeInstrument('drumKit')" type="button" class="btn-md btn btn-primary">
+	    drum kit
+	  </button>
+	</div>
+        <div class="row hide" id='xylophoneDiv'>
+  	  <div class="col-sm-1">
+            <button onclick="send('xC1')" type="button" class="btn-lg xylophone-key-C1 btn btn-success">
+              C
+            </button>
+          </div>
+	  <div class="col-sm-1">
+            <button onclick="send('xD1')" type="button" class="btn-lg xylophone-key-D1 btn btn-success">
+       	      D
+            </button>
+          </div>
+          <div class="col-sm-1">
+            <button onclick="send('xE1')" type="button" class="btn-lg xylophone-key-E1 btn btn-success">
+              E
+            </button>
+          </div>
+          <div class="col-sm-1">
+            <button onclick="send('xF1')" type="button" class="btn-lg xylophone-key-F1 btn btn-success">
+              F
+            </button>
+          </div>
+          <div class="col-sm-1">
+            <button onclick="send('xG1')" type="button" class="btn-lg xylophone-key-G1 btn btn-success">
+              G
+            </button>
+          </div>
+          <div class="col-sm-1">
+            <button onclick="send('xA2')" type="button" class="btn-lg xylophone-key-A2 btn btn-success">
+              A
+            </button>
+          </div>
+          <div class="col-sm-1">
+            <button onclick="send('xB2')" type="button" class="btn-lg xylophone-key-B2 btn btn-success">
+              B
+            </button>
+          </div>
+          <div class="col-sm-1">
+            <button onclick="send('xC2')" type="button" class="btn-lg xylophone-key-C2 btn btn-success">
+              C
+            </button>
+          </div>
+          <div class="col-sm-1">
+            <button onclick="send('xD2')" type="button" class="btn-lg xylophone-key-D2 btn btn-success">
+              D
+            </button>
+          </div>
+          <div class="col-sm-1">
+            <button onclick="send('xE2')" type="button" class="btn-lg xylophone-key-E2 btn btn-success">
+              E
+           </button>
+          </div>
+          <div class="col-sm-1">
+            <button onclick="send('xF2')" type="button" class="btn-lg xylophone-key-F2 btn btn-success">
+              F
+            </button>
+          </div>
+        </div>   
+	<div class="hide" id="drumKitDiv">
+          <a href='#' class='btn btn-default btn-drum'></a>
+        </div>
+        <div id="userIdDiv">
+          <H2>Please Enter A User Name</H2>
+          <input maxlength='15' class='form-control' id='userId'/>
+          <br>
+          <button onclick="enterUserId()" type="button" class="btn-lg btn-primary">
+            Enter
+          </button>
+        </div>
+        <p class="result"></p>
+      </div>
+    </div>
+  </body>
+</html>
+
