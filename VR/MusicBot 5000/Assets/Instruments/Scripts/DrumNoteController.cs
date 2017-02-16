@@ -17,7 +17,6 @@ public class DrumNoteController : NoteController {
 
     new void OnTriggerEnter(Collider col)
     {
-        base.OnTriggerEnter(col);
         nextTime = Time.unscaledTime+delay;
     }
 
@@ -30,10 +29,10 @@ public class DrumNoteController : NoteController {
                 nextTime = Time.unscaledTime + nextRoll;
                 if (roll1)
                 {
-                    cont.SendMessage("PlayNote", note);
+                    cont.PlayNote(note);
                 }else
                 {
-                    cont.SendMessage("PlayNote", note2);
+                    cont.PlayNote(note2);
                 }
                 roll1 = !roll1;
             }

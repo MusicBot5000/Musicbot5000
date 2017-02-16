@@ -28,11 +28,11 @@ public class NoteController : MonoBehaviour {
                 ColliderPosition.y -= transform.GetComponent<BoxCollider>().center.y;
                 if (ColliderPosition.y > BOTTOM_COLLIDER_THRESH)
                 {
-                    cont.SendMessage("PlayNote", note);
+                    cont.PlayNote(note);
                 }
             }else
             {
-                cont.SendMessage("PlayNote", note);
+                cont.PlayNote(note);
             }
         }
     }
