@@ -10,16 +10,13 @@ public class InstrumentController : MonoBehaviour {
         comms = GameObject.FindGameObjectWithTag("GameController").GetComponent<Communication>();
 	}
 
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    void PlayNote(string note)
+    public void PlayNote(string note)
     {
         n = note;
-        Debug.Log("Note " + note + " played.");
-        comms.SendNum(Instrument, note);
+        if (note != "")
+        {
+            Debug.Log("Note " + note + " played.");
+            comms.SendNum(Instrument, note);
+        }
     }
 }

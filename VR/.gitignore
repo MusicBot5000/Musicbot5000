@@ -1,7 +1,6 @@
 # =============== #
 # Unity generated #
 # =============== #
-*.meta
 Temp/
 Library/
 Builds/
