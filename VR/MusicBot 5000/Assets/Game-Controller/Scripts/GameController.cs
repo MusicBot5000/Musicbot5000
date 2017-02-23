@@ -13,8 +13,10 @@ public class GameController : MonoBehaviour {
     public int InstrumentID;
 
     // Hand Control Variables
+    EnvMenuToggler EnvMenu;
     public bool LMenuOpen;
     public bool RMenuOpen;
+    public bool EnvMenuOpen;
 
     // Metronome Control Variables
     Metronome Metro;
@@ -27,12 +29,16 @@ public class GameController : MonoBehaviour {
     
 
 	void Start () {
-        Metro = GameObject.Find("Metronome").GetComponentInChildren<Metronome>();
-
         InstrumentID = -1;
+
         LMenuOpen = false;
         RMenuOpen = false;
+        EnvMenuOpen = false;
+        EnvMenu = GameObject.Find("EnvSelection").GetComponentInChildren<EnvMenuToggler>();
+
         MetronomeActive = false;
+        Metro = GameObject.Find("Metronome").GetComponentInChildren<Metronome>();
+
         RecLoopActive = false;
         PlayLoopActive = false;
         looper = GameObject.FindGameObjectWithTag("GameController").GetComponent<LoopStorage>();
@@ -54,6 +60,11 @@ public class GameController : MonoBehaviour {
             InstrumentInst = Instantiate(Instruments[Id], InstrumentSpot) as GameObject;
         }
         InstrumentID = Id;
+    }
+
+    public void ToggleEnvMenu()
+    {
+        EnvMenu.Toggle();
     }
 
 
