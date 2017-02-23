@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour {
     // Metronome Control Variables
     Metronome Metro;
     public bool MetronomeActive;
+    public double MetronomeBPM;
 
     // Looping Control Varaibles
     public bool RecLoopActive;
@@ -37,6 +38,7 @@ public class GameController : MonoBehaviour {
         EnvMenu = GameObject.Find("EnvSelection").GetComponentInChildren<EnvMenuToggler>();
 
         MetronomeActive = false;
+        MetronomeBPM = 100;
         Metro = GameObject.Find("Metronome").GetComponentInChildren<Metronome>();
 
         RecLoopActive = false;

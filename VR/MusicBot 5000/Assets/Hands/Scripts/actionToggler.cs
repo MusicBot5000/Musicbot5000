@@ -4,6 +4,7 @@ using System.Collections;
 public class actionToggler : MonoBehaviour {
 
     private GameController GameCon;
+    public Canvas MetronomeInfo;
 
     private menuToggler Menu;
 
@@ -38,6 +39,7 @@ public class actionToggler : MonoBehaviour {
                 case "MetroButton":
                     GameCon.ToggleMetronome();
                     ActionActive = GameCon.MetronomeActive;
+                    MetronomeInfo.gameObject.SetActive(GameCon.MetronomeActive);
                     break;
                 case "RecButton":
                     GameCon.ToggleRecLoop();

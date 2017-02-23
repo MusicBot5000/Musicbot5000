@@ -46,7 +46,12 @@ public class menuToggler : MonoBehaviour
         }
         foreach (GameObject Button in Buttons)
         {
-            Button.SetActive(TurnOn);
+            if(!(Button.name=="MetronomeInfo" && !GameCon.MetronomeActive))
+            {
+                Button.SetActive(TurnOn);
+            }
+            
+            
         }
         yield return null;
     }
