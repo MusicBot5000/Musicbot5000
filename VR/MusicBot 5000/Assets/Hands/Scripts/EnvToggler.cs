@@ -15,7 +15,7 @@ public class EnvToggler : MonoBehaviour {
     {
         if (Other.tag == "MenuPointer")
         {
-            GameCon.ToggleEnvMenu();
+            GameCon.ToggleEnvMenu(transform.name);
             string log = string.Format("The {0} Environment Selected", transform.name);
             Debug.Log(log);
         }
