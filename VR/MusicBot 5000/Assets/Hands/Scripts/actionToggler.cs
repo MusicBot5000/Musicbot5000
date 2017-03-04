@@ -50,7 +50,7 @@ public class actionToggler : MonoBehaviour {
                     ActionActive = GameCon.PlayLoopActive;
                     break;
                 case "EnvButton":
-                    GameCon.ToggleEnvMenu();
+                    GameCon.ToggleEnvMenu(null);
                     break;
                 default:
                     Debug.LogError("ERROR: Not valid button");

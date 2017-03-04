@@ -12,6 +12,11 @@ public class GameController : MonoBehaviour {
     GameObject InstrumentInst;
     public int InstrumentID;
 
+    // Environment Control Variables
+    public Transform EnvironmentSpot;
+    public GameObject[] Environments;
+    GameObject EnvironmentInst;
+
     // Hand Control Variables
     EnvMenuToggler EnvMenu;
     public bool LMenuOpen;
@@ -31,6 +36,8 @@ public class GameController : MonoBehaviour {
 
 	void Start () {
         InstrumentID = -1;
+
+        EnvironmentInst = null;
 
         LMenuOpen = false;
         RMenuOpen = false;
@@ -64,8 +71,26 @@ public class GameController : MonoBehaviour {
         InstrumentID = Id;
     }
 
-    public void ToggleEnvMenu()
+    public void ToggleEnvMenu(string EnvName)
     {
+        if (EnvName != null)
+        {
+            if (EnvironmentInst == null)
+            {
+                EnvironmentInst = GameObject.FindGameObjectWithTag("Environment");
+            }
+            if (!EnvironmentInst.name.Contains(EnvName))
+            {
+                Destroy(EnvironmentInst);
+                foreach (GameObject Env in Environments)
+                {
+                    if (Env.name == EnvName)
+                    {
+                        EnvironmentInst = Instantiate(Env, EnvironmentSpot) as GameObject;
+                    }
+                }
+            }
+        }
         EnvMenu.Toggle();
     }
 
