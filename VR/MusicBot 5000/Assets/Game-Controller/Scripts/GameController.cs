@@ -12,13 +12,21 @@ public class GameController : MonoBehaviour {
     GameObject InstrumentInst;
     public int InstrumentID;
 
+    // Environment Control Variables
+    public Transform EnvironmentSpot;
+    public GameObject[] Environments;
+    GameObject EnvironmentInst;
+
     // Hand Control Variables
+    EnvMenuToggler EnvMenu;
     public bool LMenuOpen;
     public bool RMenuOpen;
+    public bool EnvMenuOpen;
 
     // Metronome Control Variables
     Metronome Metro;
     public bool MetronomeActive;
+    public double MetronomeBPM;
 
     // Looping Control Varaibles
     public bool RecLoopActive;
@@ -27,12 +35,19 @@ public class GameController : MonoBehaviour {
     
 
 	void Start () {
-        Metro = GameObject.Find("Metronome").GetComponentInChildren<Metronome>();
-
         InstrumentID = -1;
+
+        EnvironmentInst = null;
+
         LMenuOpen = false;
         RMenuOpen = false;
+        EnvMenuOpen = false;
+        EnvMenu = GameObject.Find("EnvSelection").GetComponentInChildren<EnvMenuToggler>();
+
         MetronomeActive = false;
+        MetronomeBPM = 100;
+        Metro = GameObject.Find("Metronome").GetComponentInChildren<Metronome>();
+
         RecLoopActive = false;
         PlayLoopActive = false;
         looper = GameObject.FindGameObjectWithTag("GameController").GetComponent<LoopStorage>();
@@ -54,6 +69,33 @@ public class GameController : MonoBehaviour {
             InstrumentInst = Instantiate(Instruments[Id], InstrumentSpot) as GameObject;
         }
         InstrumentID = Id;
+    }
+
+    public void ToggleEnvMenu(string EnvName)
+    {
+        if (InstrumentInst != null)
+        {
+            InstrumentInst.SetActive(EnvMenuOpen);
+        }
+        if (EnvName != null)
+        {
+            if (EnvironmentInst == null)
+            {
+                EnvironmentInst = GameObject.FindGameObjectWithTag("Environment");
+            }
+            if (!EnvironmentInst.name.Contains(EnvName))
+            {
+                Destroy(EnvironmentInst);
+                foreach (GameObject Env in Environments)
+                {
+                    if (Env.name == EnvName)
+                    {
+                        EnvironmentInst = Instantiate(Env, EnvironmentSpot) as GameObject;
+                    }
+                }
+            }
+        }
+        EnvMenu.Toggle();
     }
 
 
