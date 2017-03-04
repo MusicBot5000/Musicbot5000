@@ -73,6 +73,10 @@ public class GameController : MonoBehaviour {
 
     public void ToggleEnvMenu(string EnvName)
     {
+        if (InstrumentInst != null)
+        {
+            InstrumentInst.SetActive(EnvMenuOpen);
+        }
         if (EnvName != null)
         {
             if (EnvironmentInst == null)
