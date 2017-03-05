@@ -28,11 +28,11 @@ var mcp1 = new MCP23017({
 	debug: true
 });
 
-//var mcp2 = new MCP23017({
-//	address: 0x21,
-//	device: '/dev/i2c-1',
-//	debug: true
-//});
+var mcp2 = new MCP23017({
+	address: 0x21,
+	device: '/dev/i2c-1',
+	debug: true
+});
 
 //var mcp3 = new MCP23017({
 //	address: 0x22,
@@ -51,7 +51,8 @@ function I2CGPIOController() {
 		for (var i = 0; i < 16; i++) {
 			console.log('writing pin: '+i+'as output');
 			mcp1.pinMode(i,mcp1.OUTPUT);
-			//mcp2.pinMode(i,mcp2.OUTPUT);
+			console.log('writing pin to second board: '+i);
+			mcp2.pinMode(i,mcp2.OUTPUT);
 			//mcp3.pinMode(i,mcp3.OUTPUT);
 			//mcp4.pinMode(i,mcp4.OUTPUT);
 		}
@@ -81,89 +82,92 @@ function I2CGPIOController() {
 			}
 
 			//xylophone notes
-			if (key == "xC1"){
+			if (key == "xF2"){
 				board = mcp1;
-				pin = 0;
+				pin = 7;
 				timeout = 5;
 			}
-			else if (key == "xD1") {
+			else if (key == "xE2") {
 				board = mcp1;
-				pin = 1;
+				pin = 6;
 				timeout = 5;
 			}
-			else if (key == "xE1") {
+			else if (key == "xD2") {
+				board = mcp1;
+				pin = 5;
+				timeout = 5;
+			}
+			else if (key == "xC2") {
+				board = mcp1;
+				pin = 4;
+				timeout = 5;
+			}
+			else if (key == "xB2") {
+				board = mcp1;
+				pin = 3;
+				timeout = 5;
+			}
+			else if (key == "xA2") {
 				board = mcp1;
 				pin = 2;
 				timeout = 5;
 			}
 			else if (key == "xF1") {
 				board = mcp1;
-				pin = 3;
+				pin = 1;
 				timeout = 5;
 			}
 			else if (key == "xG1") {
 				board = mcp1;
-				pin = 4;
+				pin = 0;
 				timeout = 5;
 			}
-			else if (key == "xA2") {
-				board = mcp1;
-				pin = 5;
-				timeout = 5;
-			}
-			else if (key == "xB2") {
-				board = mcp1;
-				pin = 6;
-				timeout = 5;
-			}
-			else if (key == "xC2") {
-				board = mcp1;
+			else if (key == "xE1") {
+				board = mcp2;
 				pin = 7;
 				timeout = 5;
 			}
-			else if (key == "xD2") {
-				board = mcp1;
-				pin = 8;
+			else if (key == "xD1") {
+				board = mcp2;
+				pin = 6;
 				timeout = 5;
 			}
-			else if (key == "xE2") {
-				board = mcp1;
-				pin = 9;
-				timeout = 5;
-			}
-			else if (key == "xF2") {
-				board = mcp1;
-				pin = 10;
+			else if (key == "xC1") {
+				board = mcp2;
+				pin = 5;
 				timeout = 5;
 			}
 
 			//snare drum notes
 			else if (key == "dS1") {
-				board = mcp1;
-				pin = 11;
+				board = mcp2;
+				pin = 4;
 				timeout = 5;
 			}
 			else if (key == "dS2") {
-				board = mcp1;
-				pin = 12;
+				board = mcp2;
+				pin = 3;
 				timeout = 5;
 			}
 			else if (key == "dR1") {
-				board = mcp1;
-				pin = 13;
+				board = mcp2;
+				pin = 2;
 				timeout = 5;
 			}
 			else if (key == "dR2") {
-				board = mcp1;
-				pin = 14;
+				board = mcp2;
+				pin = 1;
 				timeout = 5;
 			}
 			
 			//cowbell notes
 			else if (key == "dB1") {
-				board = mcp1;
-				pin = 15;
+				board = mcp2;
+				pin = 0;
 				timeout = 5;
+			}
+			else {
+				console.log('incorrect note')
 			}
 			console.log("writing pin "+pin+" as high");
 			//write the correct pin on the correct board as high
