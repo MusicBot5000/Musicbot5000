@@ -4,6 +4,9 @@ using System.Collections;
 public class actionToggler : MonoBehaviour {
 
     private GameController GameCon;
+    public Canvas MetronomeInfo;
+
+    private menuToggler Menu;
 
     public Material Toggled;
     public Material UnToggled;
@@ -36,6 +39,7 @@ public class actionToggler : MonoBehaviour {
                 case "MetroButton":
                     GameCon.ToggleMetronome();
                     ActionActive = GameCon.MetronomeActive;
+                    MetronomeInfo.gameObject.SetActive(GameCon.MetronomeActive);
                     break;
                 case "RecButton":
                     GameCon.ToggleRecLoop();
@@ -44,6 +48,9 @@ public class actionToggler : MonoBehaviour {
                 case "PlayButton":
                     GameCon.TogglePlayLoop();
                     ActionActive = GameCon.PlayLoopActive;
+                    break;
+                case "EnvButton":
+                    GameCon.ToggleEnvMenu(null);
                     break;
                 default:
                     Debug.LogError("ERROR: Not valid button");

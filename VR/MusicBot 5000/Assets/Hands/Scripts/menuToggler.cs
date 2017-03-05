@@ -2,9 +2,10 @@
 using System.Collections;
 using Leap;
 
-public class menuToggler : MonoBehaviour {
-    
-    
+public class menuToggler : MonoBehaviour
+{
+
+
     public GameObject Palm;
     public GameObject[] Buttons;
     public bool LeftHand;
@@ -13,32 +14,44 @@ public class menuToggler : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         GameCon = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         transform.eulerAngles = Palm.transform.eulerAngles;
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         transform.eulerAngles = Palm.transform.eulerAngles;
         transform.position = Palm.transform.position;
+        if (GameCon.EnvMenuOpen)
+        {
+            CloseMenu();
+        }
     }
 
     IEnumerator ActivateOption(bool active)
     {
+        bool TurnOn = active && !GameCon.EnvMenuOpen;
         switch (LeftHand)
         {
             case true:
-                GameCon.LMenuOpen = active;
+                GameCon.LMenuOpen = TurnOn;
                 break;
 
             case false:
-                GameCon.RMenuOpen = active;
+                GameCon.RMenuOpen = TurnOn;
                 break;
         }
-        foreach(GameObject Button in Buttons)
+        foreach (GameObject Button in Buttons)
         {
-            Button.SetActive(active);
+            if(!(Button.name=="MetronomeInfo" && !GameCon.MetronomeActive))
+            {
+                Button.SetActive(TurnOn);
+            }
+            
+            
         }
         yield return null;
     }
@@ -50,7 +63,6 @@ public class menuToggler : MonoBehaviour {
 
     public void CloseMenu()
     {
-
         StartCoroutine(ActivateOption(false));
     }
 

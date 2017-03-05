@@ -60,7 +60,7 @@ public class fingerStickToggler : MonoBehaviour
 
     IEnumerator ActivateStick(bool active)
     {
-        if ((!GameCon.LMenuOpen && !GameCon.RMenuOpen) || !active)
+        if ((!GameCon.LMenuOpen && !GameCon.RMenuOpen && !GameCon.EnvMenuOpen) || !active)
         {
             Hand.SetActive(!active);
 
