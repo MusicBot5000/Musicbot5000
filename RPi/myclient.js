@@ -47,7 +47,7 @@ function drumRoll() {
 		$('#drumRollButton').addClass('btn-danger');
 		$('#drumRollButton').text('Stop Roll');
 		_drumRolling = true;
-		_rollTimeout = setTimeout(function(){
+		_rollTimeout = setInterval(function(){
 			if (_rollSolenoid == 'dS1') {
 				send('dS2');
 				_rollSolenoid = 'dS2';
@@ -63,6 +63,6 @@ function drumRoll() {
 		$('#drumRollButton').addClass('btn-success');
 		$('#drumRollButton').text('Start Roll');
 		_drumRolling = false;
-		clearTimeout(_rollTimeout);
+		clearInterval(_rollTimeout);
 	}
 }
