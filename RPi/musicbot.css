@@ -31,3 +31,39 @@
 .xylophone-key-F2{
   height:150px;
 }
+.snare-drum{
+  padding-top: 155px;
+  border-radius: 200px;
+  height:400px;
+  width:400px;
+  background-color:white;
+  border: 10px solid black;
+}
+.snare-centre {
+ padding-left:0px;
+}
+.snare-drum-hit-zone{
+  padding-10px;
+  height:62px;
+  width:62px;
+}
+.snare-drum-roll{
+  height:31px;
+  width:90px;
+}
+.snare-drum-middle-hit-zone{
+  height:31px;
+  width:43px;
+}
+.drumKit{
+  height:480px;
+}
+.snare-drum-title{
+  padding-left:135px;
+}
+.cowbell-title{
+  padding-left:5px;
+}
+.cowbell{
+  height:100px;
+}

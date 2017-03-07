@@ -21,7 +21,8 @@
 	    drum kit
 	  </button>
 	</div>
-        <div class="row hide" id='xylophoneDiv'>
+	<br>
+    <div class="row hide" id='xylophoneDiv'>
   	  <div class="col-sm-1">
             <button onclick="send('xC1')" type="button" class="btn-lg xylophone-key-C1 btn btn-success">
               C
@@ -78,10 +79,44 @@
             </button>
           </div>
         </div>   
-	<div class="hide" id="drumKitDiv">
-          <a href='#' class='btn btn-default btn-drum'></a>
-        </div>
-        <div id="userIdDiv">
+        
+		<div class="hide drumKit" id="drumKitDiv">
+			<div class='snare-drum-with-title col-lg-6'>
+				<H3 class="snare-drum-title">Snare Drum</H3>
+				<div class="snare-drum">
+					<div class="col-sm-2">
+						<button onclick="send('dS1')" type="button" class="snare-drum-hit-zone btn btn-md btn-info">
+						  1
+						</button>
+					</div>
+					<div class="col-sm-2">
+						<button onclick="send('dS2')" type="button" class="snare-drum-hit-zone btn btn-md btn-info">
+						  2
+						</button>
+					</div>
+					<div class="col-sm-6 snare-centre">
+						<button id="drumRollButton" onclick="drumRoll()" type="button" class="snare-drum-roll btn btn-md btn-success">
+						  Start Roll
+						</button>
+						<br>
+						<button onclick="send('dR1')" type="button" class="snare-drum-middle-hit-zone btn btn-md btn-info">
+						  3
+						</button>
+						<button onclick="send('dR2')" type="button" class="snare-drum-middle-hit-zone btn btn-md btn-info">
+						  4
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class='cowbell-wth-title col-lg-2'>
+				<H3 class="cowbell-title">Cowbell</H3>
+				<div>
+					<img src="cowbell.png" alt="Cowbell" class="cowbell" onclick="send('dB1')"/>
+				</div>
+			</div>
+		</div>
+		
+		<div id="userIdDiv">
           <H2>Please Enter A User Name</H2>
           <input maxlength='15' class='form-control' id='userId'/>
           <br>
