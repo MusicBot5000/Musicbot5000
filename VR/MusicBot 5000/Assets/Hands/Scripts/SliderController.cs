@@ -17,6 +17,7 @@ public class SliderController : MonoBehaviour {
         GameCon = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         SlideArea = transform.Find("Handle Slide Area").gameObject;
         SlideThumb = SlideArea.transform.Find("Handle").gameObject;
+        Slide.value = .5f;
 	}
 
     void OnTriggerStay(Collider Other)
