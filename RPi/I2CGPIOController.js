@@ -14,10 +14,10 @@ var notesInProgress = {
 	"xF2": false,
 	
 	//snare drum
-	"dS1": false,
-	"dS2": false,
-	"dR1": false,
-	"dR2": false,
+	"S1": false,
+	"S2": false,
+	"S3": false,
+	"S4": false,
 	
 	//cowbell
 	"dB1": false,
@@ -82,27 +82,27 @@ function I2CGPIOController() {
 			}
 
 			//xylophone notes
-			if (key == "xF2"){
+			if (key == "xC1"){
 				board = mcp1;
 				pin = 7;
 				timeout = 5;
 			}
-			else if (key == "xE2") {
+			else if (key == "xD1") {
 				board = mcp1;
 				pin = 6;
 				timeout = 5;
 			}
-			else if (key == "xD2") {
+			else if (key == "xE1") {
 				board = mcp1;
 				pin = 5;
 				timeout = 5;
 			}
-			else if (key == "xC2") {
+			else if (key == "xF1") {
 				board = mcp1;
 				pin = 4;
 				timeout = 5;
 			}
-			else if (key == "xB2") {
+			else if (key == "xG1") {
 				board = mcp1;
 				pin = 3;
 				timeout = 5;
@@ -112,49 +112,49 @@ function I2CGPIOController() {
 				pin = 2;
 				timeout = 5;
 			}
-			else if (key == "xF1") {
+			else if (key == "xB2") {
 				board = mcp1;
 				pin = 1;
 				timeout = 5;
 			}
-			else if (key == "xG1") {
+			else if (key == "xC2") {
 				board = mcp1;
 				pin = 0;
 				timeout = 5;
 			}
-			else if (key == "xE1") {
+			else if (key == "xD2") {
 				board = mcp2;
 				pin = 7;
 				timeout = 5;
 			}
-			else if (key == "xD1") {
+			else if (key == "xE2") {
 				board = mcp2;
 				pin = 6;
 				timeout = 5;
 			}
-			else if (key == "xC1") {
+			else if (key == "xF2") {
 				board = mcp2;
 				pin = 5;
 				timeout = 5;
 			}
 
 			//snare drum notes
-			else if (key == "dS1") {
+			else if (key == "S1") {
 				board = mcp2;
 				pin = 4;
 				timeout = 5;
 			}
-			else if (key == "dS2") {
+			else if (key == "S2") {
 				board = mcp2;
 				pin = 3;
 				timeout = 5;
 			}
-			else if (key == "dR1") {
+			else if (key == "S3") {
 				board = mcp2;
 				pin = 2;
 				timeout = 5;
 			}
-			else if (key == "dR2") {
+			else if (key == "S4") {
 				board = mcp2;
 				pin = 1;
 				timeout = 5;
