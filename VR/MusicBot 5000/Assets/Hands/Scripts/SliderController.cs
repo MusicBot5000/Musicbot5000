@@ -26,7 +26,7 @@ public class SliderController : MonoBehaviour {
         {
             pos = (transform.InverseTransformPoint(Other.transform.position).x + 90) / 160;
             Slide.value = pos;
-            GameCon.MetronomeBPM = Convert.ToInt32(Slide.value * 180);
+            GameCon.MetronomeBPM = Convert.ToInt32(Slide.value * 168+40);
             Tempo.text = String.Format("{0}\nBPM",GameCon.MetronomeBPM);
         }
     }
