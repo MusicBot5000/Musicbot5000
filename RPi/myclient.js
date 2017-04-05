@@ -1,6 +1,6 @@
 var _userId = '';
 var _drumRolling = false;
-var _rollSolenoid = 'dS1';
+var _rollSolenoid = 'S1';
 var _rollTimeout = null;
 function send(note) {
   $('.result').html(note);
@@ -48,13 +48,13 @@ function drumRoll() {
 		$('#drumRollButton').text('Stop Roll');
 		_drumRolling = true;
 		_rollTimeout = setInterval(function(){
-			if (_rollSolenoid == 'dS1') {
-				send('dS2');
-				_rollSolenoid = 'dS2';
+			if (_rollSolenoid == 'S1') {
+				send('S2');
+				_rollSolenoid = 'S2';
 			}
-			else if (_rollSolenoid == 'dS2') {
-				send('dS1');
-				_rollSolenoid = 'dS1';
+			else if (_rollSolenoid == 'S2') {
+				send('S1');
+				_rollSolenoid = 'S1';
 			}
 		},100)
 	}
